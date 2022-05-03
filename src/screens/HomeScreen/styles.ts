@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
   },
   image: {
     height: "40%",
-    aspectRatio: 1
+    aspectRatio: 1,
+    marginTop: 30
   },
   title: {
     fontSize: 24,

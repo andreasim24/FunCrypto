@@ -94,6 +94,7 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />
         }}
       />
@@ -102,6 +103,7 @@ function BottomTabNavigator() {
         component={PortfolioScreen}
         options={{
           title: "Portfolio",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="suitcase" color={color} />
           )
@@ -112,6 +114,7 @@ function BottomTabNavigator() {
         component={MarketScreen}
         options={{
           title: "Market",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bar-graph" color={color} />
           )
@@ -122,6 +125,7 @@ function BottomTabNavigator() {
         component={RankingScreen}
         options={{
           title: "Rankings",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />
         }}
       />
@@ -130,6 +134,7 @@ function BottomTabNavigator() {
         component={ProfileScreen}
         options={{
           title: "Profile",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome5 name="user-alt" size={25} color={color} />
           )

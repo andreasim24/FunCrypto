@@ -3,7 +3,7 @@ import { View, Text, Image, FlatList } from "react-native";
 import PortfolioCoin from "../../components/PortfolioCoin";
 import styles from "./styles";
 
-const image = require("../../../assets/images/Saly-10.png");
+const image = require("../../../assets/images/portfolio.png");
 
 const portfolioCoins = [
   {

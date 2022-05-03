@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 175,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    marginTop: 30
   },
   balanceContainer: {
     width: "100%",

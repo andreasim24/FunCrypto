@@ -3,7 +3,7 @@ import { View, Text, Image, FlatList } from "react-native";
 import MarketCoin from "../../components/MarketCoin";
 import styles from "./styles";
 
-const image = require("../../../assets/images/Saly-17.png");
+const image = require("../../../assets/images/market.png");
 
 const marketCoins = [
   {
