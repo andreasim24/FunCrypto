@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
@@ -130,7 +130,9 @@ function BottomTabNavigator() {
         component={ProfileScreen}
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" size={25} color={color} />
+          )
         }}
       />
     </BottomTab.Navigator>
