@@ -31,6 +31,7 @@ import {
   ProfileScreen,
   RankingScreen
 } from "../screens";
+import CoinDetailScreen from "../screens/CoinDetailScreen";
 
 export default function Navigation({
   colorScheme
@@ -55,11 +56,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Root">
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CoinDetails"
+        component={CoinDetailScreen}
+        options={{ title: "Price Data" }}
       />
       <Stack.Screen
         name="NotFound"
