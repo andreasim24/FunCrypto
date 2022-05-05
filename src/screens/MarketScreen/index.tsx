@@ -1,102 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList } from "react-native";
 import MarketCoin from "../../components/MarketCoin";
 import styles from "./styles";
 
+import { API, graphqlOperation } from "aws-amplify";
+import { listCoins } from "../../graphql/queries";
+
 const image = require("../../../assets/images/market.png");
 
-const marketCoins = [
-  {
-    id: 1,
-    name: "Virtual Dollars",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 62.2,
-    valueUSD: 6420
-  },
-  {
-    id: 2,
-    name: "Bitcoin",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 1.5,
-    valueUSD: 4572
-  },
-  {
-    id: 3,
-    name: "Ethereum",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 2.5,
-    valueUSD: 3577
-  },
-  {
-    id: 4,
-    name: "Virtual Dollars",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 62.2,
-    valueUSD: 6420
-  },
-  {
-    id: 5,
-    name: "Bitcoin",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 1.5,
-    valueUSD: 4572
-  },
-  {
-    id: 6,
-    name: "Ethereum",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 2.5,
-    valueUSD: 3577
-  },
-  {
-    id: 7,
-    name: "Virtual Dollars",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 62.2,
-    valueUSD: 6420
-  },
-  {
-    id: 8,
-    name: "Bitcoin",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: -1.5,
-    valueUSD: 4572
-  },
-  {
-    id: 9,
-    name: "Ethereum",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    symbol: "USD",
-    valueChange24H: 2.5,
-    valueUSD: 3577
-  }
-];
-
 const MarketScreen = () => {
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCoins = async () => {
+    setLoading(true);
+    try {
+      const response = await API.graphql(graphqlOperation(listCoins));
+      setCoins(response.data.listCoins.items);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoins();
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
         style={{ width: "100%" }}
-        data={marketCoins}
+        data={coins}
+        onRefresh={fetchCoins}
+        refreshing={loading}
         renderItem={({ item }) => {
-          return <MarketCoin marketCoin={item} key={item.id} />;
+          return <MarketCoin marketCoin={item} />;
         }}
         showsVerticalScrollIndicator={false}
         ListHeaderComponentStyle={{ alignItems: "center" }}
