@@ -1,0 +1,60 @@
+type User
+  @model(mutations: null)
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, provider: iam }
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  email: String!
+  name: String
+  image: String
+  networth: Float!
+
+  portfolioCoins: [PortfolioCoin] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type PortfolioCoin
+  @model(mutations: null)
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, provider: iam }
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID! @index(name: "byUser", sortKeyFields: ["userId"])
+  amount: Float!
+
+  userId: ID!
+  user: User @hasOne(fields: ["userId"])
+
+  coinId: ID!
+  coin: Coin @hasOne(fields: ["coinId"])
+}
+
+type Coin
+  @model(mutations: null)
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, provider: iam }
+      { allow: owner }
+      { allow: groups, groups: ["Admin"] }
+    ]
+  ) {
+  id: ID!
+  cgId: String!
+  name: String!
+  symbol: String!
+  image: String
+  currentPrice: Float!
+  valueChange24H: Float!
+  valueChange1D: Float!
+  valueChange7D: Float!
+  priceHistoryString: String
+}

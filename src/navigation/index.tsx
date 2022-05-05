@@ -29,10 +29,11 @@ import {
   MarketScreen,
   PortfolioScreen,
   ProfileScreen,
-  RankingScreen
+  RankingScreen,
+  CoinDetailScreen,
+  CoinExchangeScreen,
+  WelcomeScreen
 } from "../screens";
-import CoinDetailScreen from "../screens/CoinDetailScreen";
-import CoinExchangeScreen from "../screens/CoinExchangeScreen";
 
 export default function Navigation({
   colorScheme
@@ -58,6 +59,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}

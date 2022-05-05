@@ -1,3 +1,5 @@
+import { useNavigation, CommonActions } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
 import React, { useState } from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import styles from "./styles";
@@ -5,6 +7,8 @@ import styles from "./styles";
 const image = require("../../../assets/images/Saly-16.png");
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
   const [user, setUser] = useState({
     id: "1",
     name: "Andre",
@@ -14,8 +18,14 @@ const ProfileScreen = () => {
     netWorth: 13123
   });
 
-  const signOut = () => {
-    console.warn("sign out");
+  const signOut = async () => {
+    await Auth.signOut();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Welcome" }]
+      })
+    );
   };
 
   return (

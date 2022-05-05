@@ -1,0 +1,29 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-funcrypto-dev-192749-authRole",
+      "UnauthRoleArn": "arn:aws:iam::167941845287:role/amplify-funcrypto-dev-192749-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::167941845287:role/amplify-funcrypto-dev-192749-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-funcrypto-dev-192749-deployment",
+      "UnauthRoleName": "amplify-funcrypto-dev-192749-unauthRole",
+      "StackName": "amplify-funcrypto-dev-192749",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:167941845287:stack/amplify-funcrypto-dev-192749/9d28ec70-cba5-11ec-aea3-0a3125a2e69e",
+      "AmplifyAppId": "dknv01ym89qnr",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-funcrypto-dev-192749-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "funcrypto6591cb9e": {
+          "googleClientId": "561136275354-vhemeunl1um66tg3hoa1npkdagr4f7sk.apps.googleusercontent.com"
+        }
+      },
+      "function": {
+        "funcrypto6591cb9ePostConfirmation": {
+          "deploymentBucketName": "amplify-funcrypto-dev-192749-deployment",
+          "s3Key": "amplify-builds/funcrypto6591cb9ePostConfirmation-6539682b356e486f7148-build.zip"
+        }
+      }
+    }
+  }
+}
