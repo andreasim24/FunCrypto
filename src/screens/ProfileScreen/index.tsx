@@ -1,22 +1,34 @@
 import { useNavigation, CommonActions } from "@react-navigation/native";
-import { Auth } from "aws-amplify";
-import React, { useState } from "react";
-import { View, Text, Image, Pressable } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, Image, Pressable, ActivityIndicator } from "react-native";
 import styles from "./styles";
+
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { getUser } from "../../graphql/queries";
+import AppContext from "../../utils/AppContext";
 
 const image = require("../../../assets/images/Saly-16.png");
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
 
-  const [user, setUser] = useState({
-    id: "1",
-    name: "Andre",
-    email: "andreas@gmail.com",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    netWorth: 13123
-  });
+  const [user, setUser] = useState(null);
+  const { userId } = useContext(AppContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await API.graphql(
+          graphqlOperation(getUser, { id: userId })
+        );
+        console.log(response);
+        setUser(response.data.getUser);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const signOut = async () => {
     await Auth.signOut();
@@ -27,6 +39,10 @@ const ProfileScreen = () => {
       })
     );
   };
+
+  if (!user) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <View style={styles.container}>
@@ -40,7 +56,7 @@ const ProfileScreen = () => {
           </View>
         </View>
         <View style={styles.rightContainer}>
-          <Text style={styles.value}>${user.netWorth}</Text>
+          <Text style={styles.value}>${user.networth}</Text>
         </View>
       </View>
 

@@ -5,17 +5,23 @@ import styles from "./styles";
 
 export interface PortfolioCoinProps {
   portfolioCoin: {
-    image: string;
-    name: string;
-    symbol: string;
     amount: number;
-    valueUSD: number;
+    coin: {
+      id: string;
+      image: string;
+      name: string;
+      symbol: string;
+      currentPrice: number;
+    };
   };
 }
 
 const PortfolioCoin = (props: PortfolioCoinProps) => {
   const {
-    portfolioCoin: { image, name, symbol, amount, valueUSD }
+    portfolioCoin: {
+      amount,
+      coin: { id, image, name, symbol, currentPrice }
+    }
   } = props;
 
   const navigation = useNavigation();
@@ -23,7 +29,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate("CoinDetails")}
+      onPress={() => navigation.navigate("CoinDetails", { id })}
     >
       <View style={styles.leftContainer}>
         <Image style={styles.image} source={{ uri: image }} />
@@ -33,7 +39,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
         </View>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.value}>${valueUSD}</Text>
+        <Text style={styles.value}>${amount * currentPrice}</Text>
         <Text style={styles.symbol}>
           {symbol} {amount}
         </Text>

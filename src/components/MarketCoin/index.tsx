@@ -6,6 +6,7 @@ import PercentageChange from "../PercentageChange";
 
 export interface MarketCoinProps {
   marketCoin: {
+    id: string;
     image: string;
     name: string;
     symbol: string;
@@ -16,7 +17,7 @@ export interface MarketCoinProps {
 
 const MarketCoin = (props: MarketCoinProps) => {
   const {
-    marketCoin: { image, name, symbol, valueChange24H, currentPrice }
+    marketCoin: { id, image, name, symbol, valueChange24H, currentPrice }
   } = props;
 
   const navigation = useNavigation();
@@ -24,7 +25,7 @@ const MarketCoin = (props: MarketCoinProps) => {
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate("CoinDetails")}
+      onPress={() => navigation.navigate("CoinDetails", { id })}
     >
       <View style={styles.leftContainer}>
         <Image style={styles.image} source={{ uri: image }} />

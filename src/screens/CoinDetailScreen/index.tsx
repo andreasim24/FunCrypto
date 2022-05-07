@@ -1,32 +1,73 @@
-import React, { useState } from "react";
-import { View, Text, Image, Pressable } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { View, Text, Image, Pressable, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import PercentageChange from "../../components/PercentageChange";
 import CoinPriceGraph from "../../components/CoinPriceGraph";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+import { API, graphqlOperation } from "aws-amplify";
+import { getCoin, listPortfolioCoins } from "../../graphql/queries";
+import AppContext from "../../utils/AppContext";
 
 const CoinDetailScreen = () => {
-  const [coinData, setCoinData] = useState({
-    id: "1",
-    image:
-      "https://cdn.pixabay.com/photo/2015/08/27/11/20/bitcoin-910307_960_720.png",
-    name: "Bitcoin",
-    symbol: "BTC",
-    valueChange24H: -1.12,
-    valueChange1D: 1.22,
-    valueChange7D: -2.4,
-    currentPrice: 41234,
-    amount: 2
-  });
+  const [coin, setCoin] = useState(null);
+  const [portfolioCoin, setPortfolioCoin] = useState(null);
+  const { userId } = useContext(AppContext);
 
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const fetchCoinData = async () => {
+    if (!route.params?.id) {
+      return;
+    }
+    try {
+      const response = await API.graphql(
+        graphqlOperation(getCoin, { id: route.params.id })
+      );
+      setCoin(response.data.getCoin);
+      console.log(coin);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const fetchPortfolioCoinData = async () => {
+    if (!route.params?.id) {
+      return;
+    }
+    console.log("userId");
+    console.log(userId);
+    try {
+      const response = await API.graphql(
+        graphqlOperation(listPortfolioCoins, {
+          filter: {
+            and: {
+              coinId: { eq: route.params?.id },
+              userId: { eq: userId }
+            }
+          }
+        })
+      );
+      if (response.data.listPortfolioCoins.items.length > 0) {
+        setPortfolioCoin(response.data.listPortfolioCoins.items[0]);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoinData();
+    fetchPortfolioCoinData();
+  }, []);
 
   const onBuy = () => {
-    navigation.navigate("CoinExchange", { isBuy: true, coinData });
+    navigation.navigate("CoinExchange", { isBuy: true, coin, portfolioCoin });
   };
   const onSell = () => {
-    navigation.navigate("CoinExchange", { isBuy: false, coinData });
+    navigation.navigate("CoinExchange", { isBuy: false, coin, portfolioCoin });
   };
 
   const historyString = JSON.stringify([
@@ -77,14 +118,18 @@ const CoinDetailScreen = () => {
     51586.017410455745, 51950.89679140388
   ]);
 
+  if (!coin) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.leftContainer}>
-          <Image style={styles.image} source={{ uri: coinData.image }} />
+          <Image style={styles.image} source={{ uri: coin.image }} />
           <View>
-            <Text style={styles.name}>{coinData.name}</Text>
-            <Text style={styles.symbol}>{coinData.symbol}</Text>
+            <Text style={styles.name}>{coin.name}</Text>
+            <Text style={styles.symbol}>{coin.symbol}</Text>
           </View>
         </View>
 
@@ -96,7 +141,7 @@ const CoinDetailScreen = () => {
       <View style={styles.row}>
         <View>
           <Text style={styles.label}>Current Price</Text>
-          <Text style={styles.value}>{coinData.currentPrice}</Text>
+          <Text style={styles.value}>{coin.currentPrice}</Text>
         </View>
 
         <View
@@ -108,26 +153,28 @@ const CoinDetailScreen = () => {
         >
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 Hour</Text>
-            <PercentageChange value={coinData.valueChange24H} />
+            <PercentageChange value={coin.valueChange24H} />
           </View>
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 Day</Text>
-            <PercentageChange value={coinData.valueChange1D} />
+            <PercentageChange value={coin.valueChange1D} />
           </View>
           <View style={styles.valueContainer}>
             <Text style={styles.label}>7 days</Text>
-            <PercentageChange value={coinData.valueChange7D} />
+            <PercentageChange value={coin.valueChange7D} />
           </View>
         </View>
       </View>
 
-      <CoinPriceGraph dataString={historyString} />
+      {coin.priceHistoryString && (
+        <CoinPriceGraph dataString={coin.priceHistoryString} />
+      )}
 
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coinData.symbol} {coinData.amount} ($ {""}
-          {coinData.currentPrice * coinData.amount})
+          {coin.symbol} {portfolioCoin?.amount || 0} ($ {""}
+          {coin.currentPrice * portfolioCoin?.amount || 0})
         </Text>
       </View>
 

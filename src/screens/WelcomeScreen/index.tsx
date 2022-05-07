@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import styles from "./styles";
 
 import { Auth, Hub } from "aws-amplify";
 import { useNavigation, CommonActions } from "@react-navigation/core";
 
+import AppContext from "../../utils/AppContext";
+
 const image = require("../../../assets/images/Saly-1.png");
 const googleButtonImage = require("../../../assets/images/google-button.png");
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
+  const { setUserId } = useContext(AppContext);
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = await Auth.currentAuthenticatedUser();
-      console.log("user", user);
       if (user) {
-        console.log("user data");
-        console.log(user);
+        setUserId(user.attributes.sub);
 
         navigation.dispatch(
           CommonActions.reset({
@@ -34,6 +35,7 @@ const WelcomeScreen = () => {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
       if (event === "signIn") {
+        setUserId(data.signInUserSession.accessToken.payload.sub);
         navigation.dispatch(
           CommonActions.reset({
             index: 0,

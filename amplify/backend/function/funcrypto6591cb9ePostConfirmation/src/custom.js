@@ -33,6 +33,13 @@ exports.handler = async (event, context) => {
     TableName: process.env.USERTABLE
   };
 
+  try {
+    await ddb.putItem(params).promise();
+    console.log("Success");
+  } catch (e) {
+    console.log("Error", e);
+  }
+
   // TODO Give the user $100.000
 
   const PortfolionCoinItem = {
@@ -52,7 +59,7 @@ exports.handler = async (event, context) => {
         TableName: process.env.PORTFOLIO_COIN_TABLE
       })
       .promise();
-    console.log("Success");
+    console.log("Success", PortfolionCoinItem);
   } catch (e) {
     console.log("Error", e);
   }

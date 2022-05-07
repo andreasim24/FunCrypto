@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "api": {
+      "funcrypto": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "coinTable",
+      "environmentVariableName": "COIN_TABLE"
+    }
+  ]
+}

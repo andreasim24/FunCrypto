@@ -27,10 +27,10 @@ type PortfolioCoin
       { allow: groups, groups: ["Admin"] }
     ]
   ) {
-  id: ID! @index(name: "byUser", sortKeyFields: ["userId"])
+  id: ID!
   amount: Float!
 
-  userId: ID!
+  userId: ID! @index(name: "byUser", sortKeyFields: ["id"])
   user: User @hasOne(fields: ["userId"])
 
   coinId: ID!
@@ -57,4 +57,14 @@ type Coin
   valueChange1D: Float!
   valueChange7D: Float!
   priceHistoryString: String
+}
+
+type Mutation {
+  exchangeCoins(
+    coinId: ID!
+    isBuy: Boolean!
+    amount: Float!
+    usdPortfolioCoinId: ID
+    coinPortfolioCoinId: ID
+  ): Boolean! @function(name: "ExchangeCoins-${env}")
 }
