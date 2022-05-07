@@ -27,6 +27,10 @@
           "coinTable": "Coin-y2ad6gi23bednnvzikhuxt2pfq-dev",
           "deploymentBucketName": "amplify-funcrypto-dev-192749-deployment",
           "s3Key": "amplify-builds/ExchangeCoins-2b444c445735616d6745-build.zip"
+        },
+        "FetchCoinsPrices": {
+          "deploymentBucketName": "amplify-funcrypto-dev-192749-deployment",
+          "s3Key": "amplify-builds/FetchCoinsPrices-4863596a346857547544-build.zip"
         }
       }
     }
