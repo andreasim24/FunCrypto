@@ -1,8 +1,9 @@
-import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
+import { View, Text, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
 import PercentageChange from "../PercentageChange";
+import formatMoney from "../../utils/formatMoney";
 
 export interface MarketCoinProps {
   marketCoin: {
@@ -35,7 +36,7 @@ const MarketCoin = (props: MarketCoinProps) => {
         </View>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.value}>${currentPrice}</Text>
+        <Text style={styles.value}>${formatMoney(currentPrice)}</Text>
         <PercentageChange value={valueChange24H} />
       </View>
     </Pressable>

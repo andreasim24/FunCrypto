@@ -17,7 +17,7 @@ import styles from "./styles";
 import { API, graphqlOperation } from "aws-amplify";
 import { exchangeCoins } from "./mutations";
 import { listPortfolioCoins } from "../../graphql/queries";
-
+import formatMoney from "../../utils/formatMoney";
 import AppContext from "../../utils/AppContext";
 
 const USD_COIN_ID = "7a14239b-af31-4b3e-972d-276340ab0051";
@@ -142,7 +142,7 @@ const CoinExchangeScreen = () => {
       </Text>
       <Text style={styles.subtitle}>
         1 {coin?.symbol}
-        {" = "}${coin?.currentPrice}
+        {" = "}${formatMoney(coin?.currentPrice)}
       </Text>
       <Image style={styles.image} source={image} />
 

@@ -1,0 +1,17 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "userTable",
+      "environmentVariableName": "USER_TABLE"
+    },
+    {
+      "cloudFormationParameterName": "coinTable",
+      "environmentVariableName": "COIN_TABLE"
+    },
+    {
+      "cloudFormationParameterName": "portfolioCoinTable",
+      "environmentVariableName": "PORTFOLIO_COIN_TABLE"
+    }
+  ]
+}

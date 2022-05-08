@@ -6,6 +6,7 @@ import styles from "./styles";
 import { API, graphqlOperation } from "aws-amplify";
 import { getUserPortfolio } from "./queries";
 import AppContext from "../../utils/AppContext";
+import formatMoney from "../../utils/formatMoney";
 
 const image = require("../../../assets/images/portfolio.png");
 
@@ -52,7 +53,7 @@ const PortfolioScreen = () => {
             <Image style={styles.image} source={image} />
             <View style={styles.balanceContainer}>
               <Text style={styles.label}>Portfolio Balance</Text>
-              <Text style={styles.balance}>${balance}</Text>
+              <Text style={styles.balance}>${formatMoney(balance)}</Text>
             </View>
           </>
         )}

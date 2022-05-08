@@ -9,6 +9,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { API, graphqlOperation } from "aws-amplify";
 import { getCoin, listPortfolioCoins } from "../../graphql/queries";
 import AppContext from "../../utils/AppContext";
+import formatMoney from "../../utils/formatMoney";
 
 const CoinDetailScreen = () => {
   const [coin, setCoin] = useState(null);
@@ -141,13 +142,13 @@ const CoinDetailScreen = () => {
       <View style={styles.row}>
         <View>
           <Text style={styles.label}>Current Price</Text>
-          <Text style={styles.value}>{coin.currentPrice}</Text>
+          <Text style={styles.value}>${formatMoney(coin.currentPrice)}</Text>
         </View>
 
         <View
           style={{
             flexDirection: "row",
-            width: 180,
+            width: 200,
             justifyContent: "space-between"
           }}
         >
@@ -173,8 +174,8 @@ const CoinDetailScreen = () => {
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coin.symbol} {portfolioCoin?.amount || 0} ($ {""}
-          {coin.currentPrice * portfolioCoin?.amount || 0})
+          {coin.symbol} {formatMoney(portfolioCoin?.amount || 0)}
+          {""}(${formatMoney(coin.currentPrice * (portfolioCoin?.amount || 0))})
         </Text>
       </View>
 

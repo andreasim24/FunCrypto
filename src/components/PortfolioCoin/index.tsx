@@ -1,7 +1,8 @@
-import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
+import { View, Text, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
+import formatMoney from "../../utils/formatMoney";
 
 export interface PortfolioCoinProps {
   portfolioCoin: {
@@ -39,9 +40,9 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
         </View>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.value}>${amount * currentPrice}</Text>
+        <Text style={styles.value}>${formatMoney(amount * currentPrice)}</Text>
         <Text style={styles.symbol}>
-          {symbol} {amount}
+          {symbol} {formatMoney(amount)}
         </Text>
       </View>
     </Pressable>

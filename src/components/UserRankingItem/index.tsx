@@ -1,19 +1,20 @@
-import { View, Text, Image } from "react-native";
 import React from "react";
+import { View, Text, Image } from "react-native";
 import styles from "./styles";
+import formatMoney from "../../utils/formatMoney";
 
 export interface UserRankingItemProps {
   user: {
     image: string;
     name: string;
-    netWorth: number;
+    networth: number;
   };
   place: number;
 }
 
 const UserRankingItem = (props: UserRankingItemProps) => {
   const {
-    user: { image, name, netWorth },
+    user: { image, name, networth },
     place
   } = props;
 
@@ -27,7 +28,7 @@ const UserRankingItem = (props: UserRankingItemProps) => {
         </View>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.value}>${netWorth}</Text>
+        <Text style={styles.value}>${formatMoney(networth, 0)}</Text>
       </View>
     </View>
   );

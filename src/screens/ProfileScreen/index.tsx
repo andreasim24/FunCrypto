@@ -1,19 +1,18 @@
-import { useNavigation, CommonActions } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, Pressable, ActivityIndicator } from "react-native";
 import styles from "./styles";
-
 import { Auth, API, graphqlOperation } from "aws-amplify";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { getUser } from "../../graphql/queries";
 import AppContext from "../../utils/AppContext";
-
+import formatMoney from "../../utils/formatMoney";
 const image = require("../../../assets/images/Saly-16.png");
 
 const ProfileScreen = () => {
-  const navigation = useNavigation();
-
   const [user, setUser] = useState(null);
   const { userId } = useContext(AppContext);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,7 +20,6 @@ const ProfileScreen = () => {
         const response = await API.graphql(
           graphqlOperation(getUser, { id: userId })
         );
-        console.log(response);
         setUser(response.data.getUser);
       } catch (e) {
         console.log(e);
@@ -47,21 +45,18 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={image} />
+
       <View style={styles.userContainer}>
-        <View style={styles.leftContainer}>
-          <Image style={styles.userImage} source={{ uri: user.image }} />
-          <View>
-            <Text style={styles.name}>{user.name}</Text>
-            <Text style={styles.email}>{user.email}</Text>
-          </View>
-        </View>
-        <View style={styles.rightContainer}>
-          <Text style={styles.value}>${user.networth}</Text>
+        <Image style={styles.userImage} source={{ uri: user.image }} />
+        <View>
+          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.email}>{user.email}</Text>
+          <Text style={styles.value}>${formatMoney(user.networth, 0)}</Text>
         </View>
       </View>
 
-      <Pressable onPress={signOut} style={{ marginTop: "auto" }}>
-        <Text>Sign out</Text>
+      <Pressable onPress={signOut} style={styles.button}>
+        <Text style={{ color: "white" }}>Sign out</Text>
       </Pressable>
     </View>
   );

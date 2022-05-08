@@ -1,20 +1,5 @@
-/* Amplify Params - DO NOT EDIT
-	API_VCRYPTO_GRAPHQLAPIENDPOINTOUTPUT
-	API_VCRYPTO_GRAPHQLAPIIDOUTPUT
-Amplify Params - DO NOT EDIT */
-const { CognitoIdentityServiceProvider, DynamoDB } = require("aws-sdk");
-
-// const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
+const { DynamoDB } = require("aws-sdk");
 const ddb = new DynamoDB();
-
-// /**
-//  * Get user pool information from environment variables.
-//  */
-// const COGNITO_USERPOOL_ID = process.env.COGNITO_USERPOOL_ID;
-// if (!COGNITO_USERPOOL_ID) {
-//     throw new Error(`Function requires environment variable: 'COGNITO_USERPOOL_ID'`);
-// }
-// const COGNITO_USERNAME_CLAIM_KEY = 'cognito:username';
 
 const getCoinAmount = async (coinPortfolioCoinId, userId) => {
   const params = {
@@ -26,7 +11,7 @@ const getCoinAmount = async (coinPortfolioCoinId, userId) => {
   const coinData = await ddb.getItem(params).promise();
   console.log("porftolio coin data");
   console.log(coinData);
-  // TOdo CHECK if it is indeed coin, and belongs to user
+  // CHECK if it is indeed coin, and belongs to user
   if (
     coinData &&
     coinData.Item &&
@@ -48,7 +33,7 @@ const getUsdAmount = async (usdPortfolioCoinId, userId) => {
   const coinData = await ddb.getItem(params).promise();
   console.log("usd coin data");
   console.log(coinData);
-  // TOdo CHECK if it is indeed USD coin, and belongs to user
+  // CHECK if it is indeed USD coin, and belongs to user
   // coinId: { S: process.env.USD_COIN_ID },
   // userId: { S: userId },
   if (
@@ -185,18 +170,6 @@ const resolvers = {
       const { coinId, isBuy, amount, usdPortfolioCoinId, coinPortfolioCoinId } =
         ctx.arguments;
       const userId = "b4de24af-248f-4b00-a306-02bea1735ca6";
-      // const params = {
-      //     UserPoolId: COGNITO_USERPOOL_ID, /* required */
-      //     Username: ctx.identity.claims[COGNITO_USERNAME_CLAIM_KEY], /* required */
-      // };
-      // try {
-      //     // Read more: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#adminGetUser-property
-      //     const userResponse = await cognitoIdentityServiceProvider.adminGetUser(params).promise();
-      //     console.log(userResponse);
-      // } catch (e) {
-      //     console.log(e);
-      //     // throw new Error(`NOT FOUND`);
-      // }
       const usdAmount = !usdPortfolioCoinId
         ? 0
         : await getUsdAmount(usdPortfolioCoinId, userId);
@@ -239,16 +212,6 @@ const resolvers = {
   }
 };
 
-// event
-// {
-//   "typeName": "Query", /* Filled dynamically based on @function usage location */
-//   "fieldName": "me", /* Filled dynamically based on @function usage location */
-//   "arguments": { /* GraphQL field arguments via $ctx.arguments */ },
-//   "identity": { /* AppSync identity object via $ctx.identity */ },
-//   "source": { /* The object returned by the parent resolver. E.G. if resolving field 'Post.comments', the source is the Post object. */ },
-//   "request": { /* AppSync request object. Contains things like headers. */ },
-//   "prev": { /* If using the built-in pipeline resolver support, this contains the object returned by the previous function. */ },
-// }
 exports.handler = async event => {
   const typeHandler = resolvers[event.typeName];
   if (typeHandler) {

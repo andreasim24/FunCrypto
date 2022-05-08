@@ -13,18 +13,11 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     height: 50,
     marginVertical: 10,
     width: "100%"
-  },
-  leftContainer: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  rightContainer: {
-    alignItems: "flex-end"
   },
   userImage: {
     width: 50,
@@ -37,12 +30,25 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   email: {
-    color: "#707070"
+    color: "#707070",
+    marginVertical: 5
   },
   value: {
     fontWeight: "bold",
     marginBottom: 5,
     fontSize: 18
+  },
+  symbol: {
+    color: "#6b6b6b"
+  },
+  button: {
+    marginTop: "auto",
+    padding: 15,
+    width: 120,
+    borderRadius: 50,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
