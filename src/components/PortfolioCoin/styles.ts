@@ -1,11 +1,17 @@
 import { StyleSheet } from "react-native";
+import { COLORS, SIZES, FONTS } from "../../constants/theme";
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    flex: 1,
-    margin: 10,
+    width: "100%",
+    marginTop: SIZES.base,
+    padding: SIZES.padding,
+    borderRadius: 20,
+    backgroundColor: COLORS.white,
+    elevation: 10,
+    shadowColor: COLORS.lightPurple,
     justifyContent: "space-between",
+    flexDirection: "row",
     alignItems: "center"
   },
   leftContainer: {

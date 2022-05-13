@@ -18,6 +18,7 @@ const RankingScreen = () => {
       const response = await API.graphql(
         graphqlOperation(getUsersByNetworth, { limit: 100 })
       );
+      console.log(response);
       setUsers(response.data.getUsersByNetworth.items);
     } catch (e) {
       console.log(e);

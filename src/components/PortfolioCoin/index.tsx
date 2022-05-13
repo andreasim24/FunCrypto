@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
 import formatMoney from "../../utils/formatMoney";
@@ -28,7 +28,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
   const navigation = useNavigation();
 
   return (
-    <Pressable
+    <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate("CoinDetails", { id })}
     >
@@ -45,7 +45,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
           {symbol} {formatMoney(amount)}
         </Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS, SIZES, FONTS } from "../../constants/theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,12 +18,11 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
   label: {
-    fontSize: 18,
-    color: "#707070"
+    ...FONTS.h3,
+    color: COLORS.lightPurple
   },
   balance: {
-    fontSize: 30,
-    fontWeight: "bold"
+    ...FONTS.h1
   }
 });
 

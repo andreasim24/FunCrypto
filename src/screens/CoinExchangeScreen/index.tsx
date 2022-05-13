@@ -100,7 +100,7 @@ const CoinExchangeScreen = () => {
         graphqlOperation(exchangeCoins, variables)
       );
       if (response.data.exchangeCoins) {
-        navigation.navigate("Root");
+        navigation.navigate("Portfolio");
       } else {
         Alert.alert("Error", "There was an error exchanging coins");
       }

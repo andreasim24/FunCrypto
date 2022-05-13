@@ -12,13 +12,31 @@ import { Amplify } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 Amplify.configure(awsconfig);
 
+import {
+  Roboto_300Light,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+  Roboto_900Black
+} from "@expo-google-fonts/roboto";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+
 export default function App() {
   const [userId, setUserId] = useState(null);
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  if (!isLoadingComplete) {
-    return null;
+  let [fontsLoaded] = useFonts({
+    RobotoRegular: Roboto_400Regular,
+    RobotoLight: Roboto_300Light,
+    RobotoMedium: Roboto_500Medium,
+    RobotoBold: Roboto_700Bold,
+    RobotoBlack: Roboto_900Black
+  });
+
+  if (!isLoadingComplete && !fontsLoaded) {
+    return <AppLoading />;
   } else {
     return (
       <SafeAreaProvider>

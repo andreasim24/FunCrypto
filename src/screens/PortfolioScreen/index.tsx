@@ -39,7 +39,6 @@ const PortfolioScreen = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        style={{ width: "100%" }}
         data={portfolioCoins}
         renderItem={({ item }) => {
           return <PortfolioCoin portfolioCoin={item} />;

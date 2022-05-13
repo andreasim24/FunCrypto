@@ -104,7 +104,8 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarStyle: { height: 60 }
       }}
     >
       <BottomTab.Screen
@@ -138,7 +139,7 @@ function BottomTabNavigator() {
           )
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Rankings"
         component={RankingScreen}
         options={{
@@ -146,7 +147,7 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Profile"
         component={ProfileScreen}

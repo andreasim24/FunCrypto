@@ -28,7 +28,6 @@ const CoinDetailScreen = () => {
         graphqlOperation(getCoin, { id: route.params.id })
       );
       setCoin(response.data.getCoin);
-      console.log(coin);
     } catch (e) {
       console.error(e);
     }
@@ -38,8 +37,6 @@ const CoinDetailScreen = () => {
     if (!route.params?.id) {
       return;
     }
-    console.log("userId");
-    console.log(userId);
     try {
       const response = await API.graphql(
         graphqlOperation(listPortfolioCoins, {
